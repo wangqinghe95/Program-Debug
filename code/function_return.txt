@@ -1,0 +1,54 @@
+
+foo:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <function_return>:
+   0:	55                   	push   %rbp
+   1:	48 89 e5             	mov    %rsp,%rbp
+   4:	b8 00 00 00 00       	mov    $0x0,%eax	// 将 0 保存到返回值寄存器 %eax 中
+   9:	5d                   	pop    %rbp
+   a:	c3                   	retq   
+
+000000000000000b <function_return_int>:
+   b:	55                   	push   %rbp
+   c:	48 89 e5             	mov    %rsp,%rbp
+   f:	c7 45 fc 00 00 00 00 	movl   $0x0,-0x4(%rbp)	// 函数局部局部变量入栈、保存数值
+  16:	8b 45 fc             	mov    -0x4(%rbp),%eax	// 将 %rbp 寄存器值赋值给 %eax 中，用于返回
+  19:	5d                   	pop    %rbp
+  1a:	c3                   	retq   
+
+000000000000001b <func_return_double>:
+  1b:	55                   	push   %rbp
+  1c:	48 89 e5             	mov    %rsp,%rbp
+  1f:	66 0f ef c0          	pxor   %xmm0,%xmm0		// 按位对寄存器做or运算。因为返回的是double的零
+  23:	5d                   	pop    %rbp
+  24:	c3                   	retq   
+
+0000000000000025 <func_return_add>:
+  25:	55                   	push   %rbp
+  26:	48 89 e5             	mov    %rsp,%rbp
+  29:	b8 08 00 00 00       	mov    $0x8,%eax	// 将 0x8 写入到 %eax 寄存器中返回
+  2e:	5d                   	pop    %rbp
+  2f:	c3                   	retq   
+
+0000000000000030 <func_return_variable_add>:
+  30:	55                   	push   %rbp
+  31:	48 89 e5             	mov    %rsp,%rbp
+  34:	c7 45 f8 03 00 00 00 	movl   $0x3,-0x8(%rbp)	// 将保存值为 0x3 的地址进栈
+  3b:	c7 45 fc 04 00 00 00 	movl   $0x4,-0x4(%rbp)	// 将保存值为 0x4 的地址进栈
+  42:	8b 55 f8             	mov    -0x8(%rbp),%edx	// 值为 0x3 地址退栈，保存到寄存器 %edx 中
+  45:	8b 45 fc             	mov    -0x4(%rbp),%eax	// 值为 0x4 地址退栈，保存到寄存器 %eax 中
+  48:	01 d0                	add    %edx,%eax		// 将 %edx 寄存器的值加到 %eax 寄存器中
+  4a:	5d                   	pop    %rbp
+  4b:	c3                   	retq   
+
+000000000000004c <main>:
+  4c:	55                   	push   %rbp
+  4d:	48 89 e5             	mov    %rsp,%rbp
+  50:	b8 00 00 00 00       	mov    $0x0,%eax
+  55:	e8 00 00 00 00       	callq  5a <main+0xe>
+  5a:	b8 00 00 00 00       	mov    $0x0,%eax
+  5f:	5d                   	pop    %rbp
+  60:	c3                   	retq   
