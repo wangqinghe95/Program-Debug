@@ -1,0 +1,160 @@
+
+assemble_operation:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <func_add>:
+   0:	55                   	push   %rbp
+   1:	48 89 e5             	mov    %rsp,%rbp
+   4:	89 7d fc             	mov    %edi,-0x4(%rbp)
+   7:	89 75 f8             	mov    %esi,-0x8(%rbp)
+   a:	8b 55 fc             	mov    -0x4(%rbp),%edx
+   d:	8b 45 f8             	mov    -0x8(%rbp),%eax
+  10:	01 d0                	add    %edx,%eax	// 1
+  12:	5d                   	pop    %rbp
+  13:	c3                   	retq   
+
+0000000000000014 <func_sub>:
+  14:	55                   	push   %rbp
+  15:	48 89 e5             	mov    %rsp,%rbp
+  18:	89 7d fc             	mov    %edi,-0x4(%rbp)
+  1b:	89 75 f8             	mov    %esi,-0x8(%rbp)
+  1e:	8b 45 fc             	mov    -0x4(%rbp),%eax
+  21:	2b 45 f8             	sub    -0x8(%rbp),%eax	// 2
+  24:	5d                   	pop    %rbp
+  25:	c3                   	retq   
+
+0000000000000026 <func_mul>:
+  26:	55                   	push   %rbp
+  27:	48 89 e5             	mov    %rsp,%rbp
+  2a:	89 7d fc             	mov    %edi,-0x4(%rbp)
+  2d:	89 75 f8             	mov    %esi,-0x8(%rbp)
+  30:	8b 45 fc             	mov    -0x4(%rbp),%eax
+  33:	0f af 45 f8          	imul   -0x8(%rbp),%eax	// 3
+  37:	5d                   	pop    %rbp
+  38:	c3                   	retq   
+
+0000000000000039 <func_div>:
+  39:	55                   	push   %rbp
+  3a:	48 89 e5             	mov    %rsp,%rbp
+  3d:	89 7d fc             	mov    %edi,-0x4(%rbp)
+  40:	89 75 f8             	mov    %esi,-0x8(%rbp)
+  43:	83 7d f8 00          	cmpl   $0x0,-0x8(%rbp)		// 4
+  47:	75 05                	jne    4e <func_div+0x15>	// 5
+  49:	8b 45 f8             	mov    -0x8(%rbp),%eax
+  4c:	eb 07                	jmp    55 <func_div+0x1c>	// 6
+  4e:	8b 45 fc             	mov    -0x4(%rbp),%eax
+  51:	99                   	cltd   
+  52:	f7 7d f8             	idivl  -0x8(%rbp)			// 7
+  55:	5d                   	pop    %rbp
+  56:	c3                   	retq   
+
+0000000000000057 <func_and>:
+  57:	55                   	push   %rbp
+  58:	48 89 e5             	mov    %rsp,%rbp
+  5b:	89 7d fc             	mov    %edi,-0x4(%rbp)
+  5e:	89 75 f8             	mov    %esi,-0x8(%rbp)
+  61:	8b 45 fc             	mov    -0x4(%rbp),%eax
+  64:	23 45 f8             	and    -0x8(%rbp),%eax		// 8
+  67:	5d                   	pop    %rbp
+  68:	c3                   	retq   
+
+0000000000000069 <func_or>:
+  69:	55                   	push   %rbp
+  6a:	48 89 e5             	mov    %rsp,%rbp
+  6d:	89 7d fc             	mov    %edi,-0x4(%rbp)
+  70:	89 75 f8             	mov    %esi,-0x8(%rbp)
+  73:	8b 45 fc             	mov    -0x4(%rbp),%eax
+  76:	0b 45 f8             	or     -0x8(%rbp),%eax		// 9
+  79:	5d                   	pop    %rbp
+  7a:	c3                   	retq   
+
+000000000000007b <func_xor>:
+  7b:	55                   	push   %rbp
+  7c:	48 89 e5             	mov    %rsp,%rbp
+  7f:	89 7d fc             	mov    %edi,-0x4(%rbp)
+  82:	89 75 f8             	mov    %esi,-0x8(%rbp)
+  85:	8b 45 fc             	mov    -0x4(%rbp),%eax
+  88:	33 45 f8             	xor    -0x8(%rbp),%eax		// 10
+  8b:	5d                   	pop    %rbp
+  8c:	c3                   	retq   
+
+000000000000008d <func_if>:
+  8d:	55                   	push   %rbp
+  8e:	48 89 e5             	mov    %rsp,%rbp
+  91:	89 7d fc             	mov    %edi,-0x4(%rbp)
+  94:	89 75 f8             	mov    %esi,-0x8(%rbp)
+  97:	8b 45 fc             	mov    -0x4(%rbp),%eax
+  9a:	3b 45 f8             	cmp    -0x8(%rbp),%eax
+  9d:	7e 05                	jle    a4 <func_if+0x17>	// 11
+  9f:	8b 45 fc             	mov    -0x4(%rbp),%eax
+  a2:	eb 03                	jmp    a7 <func_if+0x1a>
+  a4:	8b 45 f8             	mov    -0x8(%rbp),%eax
+  a7:	5d                   	pop    %rbp
+  a8:	c3                   	retq   
+
+00000000000000a9 <func_operation>:
+  a9:	55                   	push   %rbp
+  aa:	48 89 e5             	mov    %rsp,%rbp
+  ad:	48 83 ec 30          	sub    $0x30,%rsp
+  b1:	c7 45 d8 0a 00 00 00 	movl   $0xa,-0x28(%rbp)
+  b8:	c7 45 dc 02 00 00 00 	movl   $0x2,-0x24(%rbp)
+  bf:	8b 55 dc             	mov    -0x24(%rbp),%edx
+  c2:	8b 45 d8             	mov    -0x28(%rbp),%eax
+  c5:	89 d6                	mov    %edx,%esi
+  c7:	89 c7                	mov    %eax,%edi
+  c9:	e8 00 00 00 00       	callq  ce <func_operation+0x25>
+  ce:	89 45 e0             	mov    %eax,-0x20(%rbp)
+  d1:	8b 55 dc             	mov    -0x24(%rbp),%edx
+  d4:	8b 45 d8             	mov    -0x28(%rbp),%eax
+  d7:	89 d6                	mov    %edx,%esi
+  d9:	89 c7                	mov    %eax,%edi
+  db:	e8 00 00 00 00       	callq  e0 <func_operation+0x37>
+  e0:	89 45 e4             	mov    %eax,-0x1c(%rbp)
+  e3:	8b 55 dc             	mov    -0x24(%rbp),%edx
+  e6:	8b 45 d8             	mov    -0x28(%rbp),%eax
+  e9:	89 d6                	mov    %edx,%esi
+  eb:	89 c7                	mov    %eax,%edi
+  ed:	e8 00 00 00 00       	callq  f2 <func_operation+0x49>
+  f2:	89 45 e8             	mov    %eax,-0x18(%rbp)
+  f5:	8b 55 dc             	mov    -0x24(%rbp),%edx
+  f8:	8b 45 d8             	mov    -0x28(%rbp),%eax
+  fb:	89 d6                	mov    %edx,%esi
+  fd:	89 c7                	mov    %eax,%edi
+  ff:	e8 00 00 00 00       	callq  104 <func_operation+0x5b>
+ 104:	89 45 ec             	mov    %eax,-0x14(%rbp)
+ 107:	8b 55 dc             	mov    -0x24(%rbp),%edx
+ 10a:	8b 45 d8             	mov    -0x28(%rbp),%eax
+ 10d:	89 d6                	mov    %edx,%esi
+ 10f:	89 c7                	mov    %eax,%edi
+ 111:	e8 00 00 00 00       	callq  116 <func_operation+0x6d>
+ 116:	89 45 f0             	mov    %eax,-0x10(%rbp)
+ 119:	8b 55 dc             	mov    -0x24(%rbp),%edx
+ 11c:	8b 45 d8             	mov    -0x28(%rbp),%eax
+ 11f:	89 d6                	mov    %edx,%esi
+ 121:	89 c7                	mov    %eax,%edi
+ 123:	e8 00 00 00 00       	callq  128 <func_operation+0x7f>
+ 128:	89 45 f4             	mov    %eax,-0xc(%rbp)
+ 12b:	8b 55 dc             	mov    -0x24(%rbp),%edx
+ 12e:	8b 45 d8             	mov    -0x28(%rbp),%eax
+ 131:	89 d6                	mov    %edx,%esi
+ 133:	89 c7                	mov    %eax,%edi
+ 135:	e8 00 00 00 00       	callq  13a <func_operation+0x91>
+ 13a:	89 45 f8             	mov    %eax,-0x8(%rbp)
+ 13d:	8b 55 dc             	mov    -0x24(%rbp),%edx
+ 140:	8b 45 d8             	mov    -0x28(%rbp),%eax
+ 143:	89 d6                	mov    %edx,%esi
+ 145:	89 c7                	mov    %eax,%edi
+ 147:	e8 00 00 00 00       	callq  14c <func_operation+0xa3>
+ 14c:	89 45 fc             	mov    %eax,-0x4(%rbp)
+ 14f:	90                   	nop
+ 150:	c9                   	leaveq 
+ 151:	c3                   	retq   
+
+0000000000000152 <main>:
+ 152:	55                   	push   %rbp
+ 153:	48 89 e5             	mov    %rsp,%rbp
+ 156:	b8 00 00 00 00       	mov    $0x0,%eax
+ 15b:	5d                   	pop    %rbp
+ 15c:	c3                   	retq   

@@ -1,0 +1,67 @@
+
+func_paramter:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <func_one_paramter>:
+   0:	55                   	push   %rbp
+   1:	48 89 e5             	mov    %rsp,%rbp
+   4:	89 7d fc             	mov    %edi,-0x4(%rbp)	// 将 %edi（函数第一个参数值） 中的值保存中栈中
+   7:	89 75 f8             	mov    %esi,-0x8(%rbp)	// 将 %esi（函数第二个参数值） 中的值保存中栈中
+   a:	8b 55 fc             	mov    -0x4(%rbp),%edx	// 栈顶元素退栈，数据保存到 %edx 寄存器中
+   d:	8b 45 f8             	mov    -0x8(%rbp),%eax	// 栈顶元素退栈，数据保存到 %eax 
+  10:	01 d0                	add    %edx,%eax		// 将 %eax 寄存器数值加到 %eax 寄存器中
+  12:	5d                   	pop    %rbp
+  13:	c3                   	retq   
+
+0000000000000014 <func_more_paramter>:
+  14:	55                   	push   %rbp
+  15:	48 89 e5             	mov    %rsp,%rbp
+  18:	89 7d fc             	mov    %edi,-0x4(%rbp)	// %edi 寄存器数值(a1)保存到栈中
+  1b:	89 75 f8             	mov    %esi,-0x8(%rbp)	// %esi 寄存器数值(a2)保存到栈中
+  1e:	89 55 f4             	mov    %edx,-0xc(%rbp)	// %edx（保存函数第三个参数值）寄存器数值保存到栈中
+  21:	89 4d f0             	mov    %ecx,-0x10(%rbp)	// %ecx（保存函数第四个参数值）寄存器数值保存到栈中
+  24:	44 89 45 ec          	mov    %r8d,-0x14(%rbp)	// %r8d（保存函数第五个参数值）寄存器数值保存到栈中
+  28:	44 89 4d e8          	mov    %r9d,-0x18(%rbp)	// %r9d（保存函数第六个参数值）寄存器数值保存到栈中
+  2c:	8b 55 fc             	mov    -0x4(%rbp),%edx	// 将 %rbp 的 -0x4 内存地址中保存的值（a1）赋值给 %edx
+  2f:	8b 45 f8             	mov    -0x8(%rbp),%eax	// 将 %rbp 的 -0x8 内存地址中保存的值（a2）赋值给 %eax
+  32:	01 c2                	add    %eax,%edx		// 将 %eax 的值加到 %edx 中，等同于（a1+a2）
+  34:	8b 45 f4             	mov    -0xc(%rbp),%eax	// 将 %rbp 的 -0xc 内存地址中保存的值（a3）赋值给 %eax
+  37:	01 c2                	add    %eax,%edx		// 将 %eax 的值加到 %edx 中，等同于（a1+a2+a3）
+  39:	8b 45 f0             	mov    -0x10(%rbp),%eax	// 将 %rbp 的 -0x10 内存地址中保存的值（a4）赋值给 %eax
+  3c:	01 c2                	add    %eax,%edx		// 将 %eax 的值加到 %edx 中，等同于（a1+a2+a3+a4）
+  3e:	8b 45 ec             	mov    -0x14(%rbp),%eax	// 将 %rbp 的 -0x14 内存地址中保存的值（a5）赋值给 %eax
+  41:	01 c2                	add    %eax,%edx		// 将 %eax 的值加到 %edx 中，等同于（a1+a2+a3+a4+a5）
+  43:	8b 45 e8             	mov    -0x18(%rbp),%eax	// 将 %rbp 的 -0x18 内存地址中保存的值（a6）赋值给 %eax
+  46:	01 c2                	add    %eax,%edx		// 将 %eax 的值加到 %edx 中，等同于（a1+a2+a3+a4+a5+a6）
+  48:	8b 45 10             	mov    0x10(%rbp),%eax	// 将 %rbp 的 0x10 内存地址中保存的值（a7）赋值给 %eax	
+  4b:	01 c2                	add    %eax,%edx		// 将 %eax 的值加到 %edx 中，等同于（a1+a2+a3+a4+a5+a6+a7）
+  4d:	8b 45 18             	mov    0x18(%rbp),%eax	// 将 %rbp 的 0x18 内存地址中保存的值（a8）赋值给 %eax
+  50:	01 d0                	add    %edx,%eax		// 将 %eax 的值加到 %edx 中，等同于（a1+a2+a3+a4+a5+a6+a7+a8）
+  52:	5d                   	pop    %rbp
+  53:	c3                   	retq   
+
+0000000000000054 <func_caller>:
+  54:	55                   	push   %rbp
+  55:	48 89 e5             	mov    %rsp,%rbp
+  58:	6a 08                	pushq  $0x8			// 将 0x8 入栈
+  5a:	6a 07                	pushq  $0x7			// 将 0x7 入栈
+  5c:	41 b9 06 00 00 00    	mov    $0x6,%r9d	// 将 0x6 保存到寄存器 %r9d 中
+  62:	41 b8 05 00 00 00    	mov    $0x5,%r8d	// 将 0x5 保存到寄存器 %r8d 中
+  68:	b9 04 00 00 00       	mov    $0x4,%ecx	// 将 0x4 保存到寄存器 %ecx 中
+  6d:	ba 03 00 00 00       	mov    $0x3,%edx	// 将 0x3 保存到寄存器 %edx 中
+  72:	be 02 00 00 00       	mov    $0x2,%esi	// 将 0x2 保存到寄存器 %esi 中
+  77:	bf 01 00 00 00       	mov    $0x1,%edi	// 将 0x1 保存到寄存器 %edi 中
+  7c:	e8 00 00 00 00       	callq  81 <func_caller+0x2d>
+  81:	48 83 c4 10          	add    $0x10,%rsp
+  85:	83 c0 09             	add    $0x9,%eax
+  88:	c9                   	leaveq 
+  89:	c3                   	retq   
+
+000000000000008a <main>:
+  8a:	55                   	push   %rbp
+  8b:	48 89 e5             	mov    %rsp,%rbp
+  8e:	b8 00 00 00 00       	mov    $0x0,%eax
+  93:	5d                   	pop    %rbp
+  94:	c3                   	retq   
