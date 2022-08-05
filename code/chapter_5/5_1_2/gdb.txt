@@ -1,0 +1,18 @@
+Breakpoint 1 at 0x400a82: file point.cpp, line 6.
+Breakpoint 2 at 0x400aed: file point.cpp, line 9.
+Breakpoint 3 at 0x400ba9: file point.cpp, line 16.
+The program is not being run.
+Starting program: /home/user/Desktop/code/ProgramDebug/point 
+
+Breakpoint 1, main () at point.cpp:6
+6	    vector<int> arr = {10,4,6,9,7};
+Continuing.
+
+Breakpoint 2, main () at point.cpp:9
+9	        long temp = arr[i];
+Continuing.
+
+Breakpoint 3, main () at point.cpp:16
+16	    for (auto& tmp : arr) {
+Continuing.
+[Inferior 1 (process 8221) exited normally]

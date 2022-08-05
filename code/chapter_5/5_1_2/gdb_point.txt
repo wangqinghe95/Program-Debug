@@ -1,0 +1,56 @@
+Breakpoint 1 at 0x400a82: file point.cpp, line 6.
+Breakpoint 2 at 0x400aed: file point.cpp, line 9.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400a82 in main() at point.cpp:6
+2       breakpoint     keep y   0x0000000000400aed in main() at point.cpp:9
+	stop only if arr[i]==6
+Breakpoint 3 at 0x400ba9: file point.cpp, line 16.
+Starting program: /home/user/Desktop/code/ProgramDebug/point 
+
+Breakpoint 1, main () at point.cpp:6
+6	    vector<int> arr = {10,4,6,9,7};
+Continuing.
+
+Breakpoint 2, main () at point.cpp:9
+9	        long temp = arr[i];
+1: arr = std::vector of length 5, capacity 5 = {4, 10, 6, 9, 7}
+2: arr[i] = 6
+Auto-display expressions now in effect:
+Num Enb Expression
+1:   y  arr
+2:   y  arr[i]
+warning: bad display number at or near 'arr'
+10	        int j = i;
+1: arr = std::vector of length 5, capacity 5 = {4, 10, 6, 9, 7}
+2: arr[i] = 6
+11	        for(; j > 0 && arr[j - 1] > temp; j--) {
+1: arr = std::vector of length 5, capacity 5 = {4, 10, 6, 9, 7}
+2: arr[i] = 6
+12	            arr[j] = arr[j - 1];
+1: arr = std::vector of length 5, capacity 5 = {4, 10, 6, 9, 7}
+2: arr[i] = 6
+Continuing.
+
+Breakpoint 3, main () at point.cpp:16
+16	    for (auto& tmp : arr) {
+1: arr = std::vector of length 5, capacity 5 = {4, 6, 7, 9, 10}
+17	        cout << tmp << " ";
+1: arr = std::vector of length 5, capacity 5 = {4, 6, 7, 9, 10}
+type = int &
+type = int &
+Continuing.
+[Inferior 1 (process 7392) exited normally]
+The program is not being run.
+The program is not being run.
+Auto-display expressions now in effect:
+Num Enb Expression
+1:   y  arr (cannot be evaluated in the current context)
+2:   y  arr[i] (cannot be evaluated in the current context)
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400a82 in main() at point.cpp:6
+	breakpoint already hit 1 time
+2       breakpoint     keep y   0x0000000000400aed in main() at point.cpp:9
+	stop only if arr[i]==6
+	breakpoint already hit 1 time
+3       breakpoint     keep y   0x0000000000400ba9 in main() at point.cpp:16
+	breakpoint already hit 1 time

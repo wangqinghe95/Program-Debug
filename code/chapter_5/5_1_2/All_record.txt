@@ -1,0 +1,178 @@
+(gdb) set logging file ./gdb_point.txt
+(gdb) set logging on
+Copying output to ./gdb_point.txt.
+(gdb) b point.cpp:6
+Breakpoint 1 at 0x400a82: file point.cpp, line 6.
+(gdb) b 9 if arr[i]==6
+Breakpoint 2 at 0x400aed: file point.cpp, line 9.
+(gdb) info breakpoints 
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400a82 in main() at point.cpp:6
+2       breakpoint     keep y   0x0000000000400aed in main() at point.cpp:9
+        stop only if arr[i]==6
+(gdb) b 16
+Breakpoint 3 at 0x400ba9: file point.cpp, line 16.
+(gdb) r
+Starting program: /home/user/Desktop/code/ProgramDebug/point 
+
+Breakpoint 1, main () at point.cpp:6
+6           vector<int> arr = {10,4,6,9,7};
+(gdb) c
+Continuing.
+
+Breakpoint 2, main () at point.cpp:9
+9               long temp = arr[i];
+(gdb) display arr
+1: arr = std::vector of length 5, capacity 5 = {4, 10, 6, 9, 7}
+(gdb) display arr[i]
+2: arr[i] = 6
+(gdb) info display 
+Auto-display expressions now in effect:
+Num Enb Expression
+1:   y  arr
+2:   y  arr[i]
+(gdb) undisplay arr
+warning: bad display number at or near 'arr'
+(gdb) n
+10              int j = i;
+1: arr = std::vector of length 5, capacity 5 = {4, 10, 6, 9, 7}
+2: arr[i] = 6
+(gdb) 
+11              for(; j > 0 && arr[j - 1] > temp; j--) {
+1: arr = std::vector of length 5, capacity 5 = {4, 10, 6, 9, 7}
+2: arr[i] = 6
+(gdb) 
+12                  arr[j] = arr[j - 1];
+1: arr = std::vector of length 5, capacity 5 = {4, 10, 6, 9, 7}
+2: arr[i] = 6
+(gdb) c
+Continuing.
+
+Breakpoint 3, main () at point.cpp:16
+16          for (auto& tmp : arr) {
+1: arr = std::vector of length 5, capacity 5 = {4, 6, 7, 9, 10}
+(gdb) n
+17              cout << tmp << " ";
+1: arr = std::vector of length 5, capacity 5 = {4, 6, 7, 9, 10}
+(gdb) whatis tmp
+type = int &
+(gdb) ptype tmp
+type = int &
+(gdb) c
+Continuing.
+4 6 7 9 10 [Inferior 1 (process 7392) exited normally]
+(gdb) 
+The program is not being run.
+(gdb) c
+The program is not being run.
+(gdb) info display 
+Auto-display expressions now in effect:
+Num Enb Expression
+1:   y  arr (cannot be evaluated in the current context)
+2:   y  arr[i] (cannot be evaluated in the current context)
+(gdb) info breakpoints 
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400a82 in main() at point.cpp:6
+        breakpoint already hit 1 time
+2       breakpoint     keep y   0x0000000000400aed in main() at point.cpp:9
+        stop only if arr[i]==6
+        breakpoint already hit 1 time
+3       breakpoint     keep y   0x0000000000400ba9 in main() at point.cpp:16
+        breakpoint already hit 1 time
+(gdb) set logging off
+Done logging to ./gdb_point.txt.
+(gdb) set logging on
+Copying output to ./gdb_point.txt.
+(gdb) set logging off
+Done logging to ./gdb_point.txt.
+(gdb) save breakpoints ./breakpoint.txt
+Saved to file './breakpoint.txt'.
+(gdb) q
+kjd0r4:~/Desktop/code/ProgramDebug$ gdb point 
+GNU gdb (Ubuntu 7.11.1-0ubuntu1~16.5) 7.11.1
+Copyright (C) 2016 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from point...done.
+(gdb) source breakpoint.txt 
+Breakpoint 1 at 0x400a82: file point.cpp, line 6.
+Breakpoint 2 at 0x400aed: file point.cpp, line 9.
+Breakpoint 3 at 0x400ba9: file point.cpp, line 16.
+(gdb) r
+Starting program: /home/user/Desktop/code/ProgramDebug/point 
+
+Breakpoint 1, main () at point.cpp:6
+6           vector<int> arr = {10,4,6,9,7};
+(gdb) c
+Continuing.
+
+Breakpoint 2, main () at point.cpp:9
+9               long temp = arr[i];
+(gdb) 
+Continuing.
+
+Breakpoint 3, main () at point.cpp:16
+16          for (auto& tmp : arr) {
+(gdb) 
+Continuing.
+4 6 7 9 10 [Inferior 1 (process 8023) exited normally]
+(gdb) 
+The program is not being run.
+(gdb) set logging on
+Copying output to gdb.txt.
+(gdb) set logging off
+Done logging to gdb.txt.
+(gdb) q
+kjd0r4:~/Desktop/code/ProgramDebug$ gdb point 
+GNU gdb (Ubuntu 7.11.1-0ubuntu1~16.5) 7.11.1
+Copyright (C) 2016 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from point...done.
+(gdb) set logging on
+Copying output to gdb.txt.
+(gdb) source breakpoint.txt 
+Breakpoint 1 at 0x400a82: file point.cpp, line 6.
+Breakpoint 2 at 0x400aed: file point.cpp, line 9.
+Breakpoint 3 at 0x400ba9: file point.cpp, line 16.
+(gdb) c
+The program is not being run.
+(gdb) r
+Starting program: /home/user/Desktop/code/ProgramDebug/point 
+
+Breakpoint 1, main () at point.cpp:6
+6           vector<int> arr = {10,4,6,9,7};
+(gdb) c
+Continuing.
+
+Breakpoint 2, main () at point.cpp:9
+9               long temp = arr[i];
+(gdb) 
+Continuing.
+
+Breakpoint 3, main () at point.cpp:16
+16          for (auto& tmp : arr) {
+(gdb) 
+Continuing.
+4 6 7 9 10 [Inferior 1 (process 8221) exited normally]
+(gdb) q
