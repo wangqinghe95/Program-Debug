@@ -1,0 +1,66 @@
+(gdb) b 33
+Breakpoint 1 at 0x400696: file function.cpp, line 33.
+(gdb) r
+Starting program: /home/user/Desktop/code/ProgramDebug/function/function 
+
+Breakpoint 1, callFunctionWithStruct (pStu=0x601060 <stu>, struStu=...) at function.cpp:33
+33          pTmpStu->age = age;
+(gdb) bt
+#0  callFunctionWithStruct (pStu=0x601060 <stu>, struStu=...) at function.cpp:33
+#1  0x0000000000400732 in callFunctionWithStructCaller () at function.cpp:45
+#2  0x000000000040077b in callFunctionWithBasicData (n_value=10, 
+    ch_str=0x7fffffffde60 "this is char string", arr_num=0x7fffffffde50) at function.cpp:56
+#3  0x00000000004007e9 in main () at function.cpp:65
+(gdb) n
+35          age = getAge(&age);
+(gdb) s
+getAge (nAge=0x7fffffffdd74) at function.cpp:20
+20          int age = 15;
+(gdb) bt
+#0  getAge (nAge=0x7fffffffdd74) at function.cpp:20
+#1  0x00000000004006ac in callFunctionWithStruct (pStu=0x601060 <stu>, struStu=...)
+    at function.cpp:35
+#2  0x0000000000400732 in callFunctionWithStructCaller () at function.cpp:45
+#3  0x000000000040077b in callFunctionWithBasicData (n_value=10, 
+    ch_str=0x7fffffffde60 "this is char string", arr_num=0x7fffffffde50) at function.cpp:56
+#4  0x00000000004007e9 in main () at function.cpp:65
+(gdb) finish 
+Run till exit from #0  getAge (nAge=0x7fffffffdd74) at function.cpp:20
+0x00000000004006ac in callFunctionWithStruct (pStu=0x601060 <stu>, struStu=...)
+    at function.cpp:35
+35          age = getAge(&age);
+Value returned is $1 = 15
+(gdb) info locals 
+pTmpStu = 0x601060 <stu>
+name = "changed name"
+age = 15
+(gdb) call getAgeNoParam() 
+$2 = 35
+(gdb) bt full 2
+#0  0x00000000004006ac in callFunctionWithStruct (pStu=0x601060 <stu>, struStu=...)
+    at function.cpp:35
+        pTmpStu = 0x601060 <stu>
+        name = "changed name"
+        age = 15
+#1  0x0000000000400732 in callFunctionWithStructCaller () at function.cpp:45
+        name = "wang.luis"
+        pStu = 0x7ffff7ffe700
+(More stack frames follow...)
+(gdb) bt full -2
+#2  0x000000000040077b in callFunctionWithBasicData (n_value=10, 
+    ch_str=0x7fffffffde60 "this is char string", arr_num=0x7fffffffde50) at function.cpp:56
+        l_nValue = 10
+        l_pStr = 0x7fffffffde60 "this is char string"
+        l_pArrNum = 0x7fffffffde50
+#3  0x00000000004007e9 in main () at function.cpp:65
+        n_value = 10
+        ch_str = "this is char string"
+        arr_number = {10, 20, 30}
+(gdb) frame 2
+#2  0x000000000040077b in callFunctionWithBasicData (n_value=10, 
+    ch_str=0x7fffffffde60 "this is char string", arr_num=0x7fffffffde50) at function.cpp:56
+56          callFunctionWithStructCaller();
+(gdb) frame 0
+#0  0x00000000004006ac in callFunctionWithStruct (pStu=0x601060 <stu>, struStu=...)
+    at function.cpp:35
+35          age = getAge(&age);
