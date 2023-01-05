@@ -22,7 +22,7 @@ void staticlib::printIntParam(int param)
 
 int staticlib::add(int num1, int num2)
 {
-    cout << __func__ << __LINE__ << endl;
+    cout << __func__ << " " << __LINE__ << " " << endl;
     int result = num1 + num2;
     return result;
 }

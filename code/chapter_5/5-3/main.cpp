@@ -1,13 +1,11 @@
 #include<iostream>
 #include"static_lib.h"
-// #include"./test/add.h"
 int main()
 {
     staticlib CMyStaticLib;
-    CMyStaticLib.printNoParam();
-    CMyStaticLib.printIntParam(10);
-
-    CMyStaticLib.division(2,5);
-
+    int a = 5;
+    int b = 2;
+    std::cout << "a/b = " << CMyStaticLib.division(2,5) << std::endl;
+    std::cout << "a+b = " << CMyStaticLib.add(2,5) << std::endl;
     return 0;
 }
