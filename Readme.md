@@ -1,6 +1,6 @@
 # GDB Command
 
-![GDB命令大全](https://www.gdbtutorial.com/gdb_commands)
+[GDB命令大全](https://www.gdbtutorial.com/gdb_commands)
 ## 启动/退出
 1. run/r: 启动程序
     + run [arguments...] : 以 [arguments] 的参数启动程序，其中 [arguments...] 可选
